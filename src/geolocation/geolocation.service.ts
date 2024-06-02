@@ -50,7 +50,8 @@ export class GeolocationService {
                 longitude,
               );
             } catch (error) {
-              throw new BadRequestException(error);
+              // throw new BadRequestException(error);
+              console.log(error);
             }
           }
           return {
@@ -74,7 +75,8 @@ export class GeolocationService {
           geolocation.latitude,
         );
       } catch (error) {
-        throw new BadRequestException(error);
+        // throw new BadRequestException(error);
+        console.log(error);
       }
     }
     return {
