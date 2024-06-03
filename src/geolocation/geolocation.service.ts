@@ -42,17 +42,12 @@ export class GeolocationService {
             data: { address, latitude, longitude },
           });
           if (email) {
-            try {
-              await this.mailService.sendGeolocationEmail(
-                email,
-                address,
-                latitude,
-                longitude,
-              );
-            } catch (error) {
-              // throw new BadRequestException(error);
-              console.log(error);
-            }
+            await this.mailService.sendGeolocationEmail(
+              email,
+              address,
+              latitude,
+              longitude,
+            );
           }
           return {
             latitude: latitude,
@@ -66,22 +61,24 @@ export class GeolocationService {
       } catch (error) {
         throw new BadRequestException(error);
       }
-    } else if (email) {
-      try {
-        await this.mailService.sendGeolocationEmail(
-          email,
-          address,
-          geolocation.latitude,
-          geolocation.latitude,
-        );
-      } catch (error) {
-        // throw new BadRequestException(error);
-        console.log(error);
+    } else {
+      if (email) {
+        try {
+          await this.mailService.sendGeolocationEmail(
+            email,
+            address,
+            geolocation.latitude,
+            geolocation.longitude,
+          );
+        } catch (error) {
+          // throw new BadRequestException(error);
+          console.log(error);
+        }
       }
+      return {
+        latitude: geolocation.latitude,
+        longitude: geolocation.longitude,
+      };
     }
-    return {
-      latitude: geolocation.latitude,
-      longitude: geolocation.latitude,
-    };
   }
 }
